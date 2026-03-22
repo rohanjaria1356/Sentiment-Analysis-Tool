@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}TopicSenti — Analysis Results{% endblock %}
+
+{% block content %}
+<!-- Results Header -->
+<section class="results-header" id="results-header">
+    <div class="results-header-content">
+        <h1 class="results-title">Analysis Results</h1>
+        <p class="results-meta">
+            <span class="meta-badge">{{ n_docs }} documents</span>
+            <span class="meta-badge">{{ n_topics }} topics</span>
+            <span class="meta-badge">{{ method }}</span>
+        </p>
+        <a href="{{ url_for('index') }}" class="btn btn--outline btn--sm">← Analyze New Text</a>
+    </div>
+</section>
+
+<!-- Overview Stats -->
+<section class="stats-section" id="stats-section">
+    <div class="stats-grid">
+        <div class="stat-card glass-card stat-card--positive">
+            <div class="stat-icon">😊</div>
+            <div class="stat-value">{{ overall_sentiment.positive_pct }}%</div>
+            <div class="stat-label">Positive</div>
+            <div class="stat-count">{{ overall_sentiment.positive }} docs</div>
+        </div>
+        <div class="stat-card glass-card stat-card--neutral">
+            <div class="stat-icon">😐</div>
+            <div class="stat-value">{{ overall_sentiment.neutral_pct }}%</div>
+            <div class="stat-label">Neutral</div>
+            <div class="stat-count">{{ overall_sentiment.neutral }} docs</div>
+        </div>
+        <div class="stat-card glass-card stat-card--negative">
+            <div class="stat-icon">😞</div>
+            <div class="stat-value">{{ overall_sentiment.negative_pct }}%</div>
+            <div class="stat-label">Negative</div>
+            <div class="stat-count">{{ overall_sentiment.negative }} docs</div>
+        </div>
+        <div class="stat-card glass-card stat-card--compound">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">{{ overall_sentiment.avg_vader_compound }}</div>
+            <div class="stat-label">Avg Compound</div>
+            <div class="stat-count">VADER score</div>
+        </div>
+    </div>
+</section>
+
+<!-- Charts Row -->
+<section class="charts-section" id="charts-section">
+    <div class="charts-grid">
+        <div class="chart-card glass-card">
+            <h2 class="chart-title">Sentiment Distribution</h2>
+            <div id="sentiment-donut-chart" class="chart-container"></div>
+        </div>
+        <div class="chart-card glass-card">
+            <h2 class="chart-title">Topic Sentiment Scores</h2>
+            <div id="compound-bar-chart" class="chart-container"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Heatmap -->
+<section class="heatmap-section" id="heatmap-section">
+    <div class="heatmap-card glass-card">
+        <h2 class="chart-title">Topic × Sentiment Heatmap</h2>
+        <div id="heatmap-chart" class="chart-container chart-container--wide"></div>
+    </div>
+</section>
+
+<!-- Topic Cards -->
+<section class="topics-section" id="topics-section">
+    <h2 class="section-title">Discovered Topics</h2>
+    <div class="topics-grid">
+        {% for topic in topics %}
+        <div class="topic-card glass-card" id="topic-card-{{ topic.topic_id }}">
+            <div class="topic-header">
+                <span class="topic-badge">Topic {{ topic.topic_id + 1 }}</span>
+                <span class="topic-label">{{ topic.label }}</span>
+            </div>
+            <div class="topic-keywords">
+                {% for kw in topic.keywords %}
+                <span class="keyword-tag">{{ kw }}</span>
+                {% endfor %}
+            </div>
+            {% set ts = topic_sentiments[topic.topic_id] %}
+            <div class="topic-sentiment-bar">
+                <div class="sent-bar-pos" style="width: {{ (ts.positive / (ts.count if ts.count > 0 else 1) * 100) | round(1) }}%"
+                     title="Positive: {{ ts.positive }}">
+                </div>
+                <div class="sent-bar-neu" style="width: {{ (ts.neutral / (ts.count if ts.count > 0 else 1) * 100)| round(1) }}%"
+                     title="Neutral: {{ ts.neutral }}">
+                </div>
+                <div class="sent-bar-neg" style="width: {{ (ts.negative / (ts.count if ts.count > 0 else 1) * 100) | round(1) }}%"
+                     title="Negative: {{ ts.negative }}">
+                </div>
+            </div>
+            <div class="topic-meta">
+                <span>{{ ts.count }} docs</span>
+                <span>Avg score: {{ ts.avg_compound }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Documents Table -->
+<section class="docs-section" id="docs-section">
+    <h2 class="section-title">Document Details</h2>
+    <div class="table-wrapper glass-card">
+        <table class="docs-table" id="docs-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Text</th>
+                    <th>Topic</th>
+                    <th>Sentiment</th>
+                    <th>VADER</th>
+                    <th>TextBlob</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                <tr class="doc-row doc-row--{{ doc.sentiment | lower }}">
+                    <td class="doc-id">{{ doc.id }}</td>
+                    <td class="doc-text" title="{{ doc.full_text }}">{{ doc.text }}</td>
+                    <td>
+                        <span class="topic-pill topic-pill--{{ doc.topic_id }}">{{ doc.topic_label }}</span>
+                    </td>
+                    <td>
+                        <span class="sentiment-pill sentiment-pill--{{ doc.sentiment | lower }}">
+                            {{ doc.sentiment }}
+                        </span>
+                    </td>
+                    <td class="score">{{ doc.vader_compound }}</td>
+                    <td class="score">{{ doc.textblob_polarity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+    // Pass chart data from Flask to JS
+    const CHART_DATA = {{ chart_data_json | safe }};
+    document.addEventListener('DOMContentLoaded', () => renderCharts(CHART_DATA));
+</script>
+{% endblock %}

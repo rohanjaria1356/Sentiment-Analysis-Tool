@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}TopicSenti — Analyze Your Text{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero-section">
+    <div class="hero-bg-shapes">
+        <div class="shape shape--1"></div>
+        <div class="shape shape--2"></div>
+        <div class="shape shape--3"></div>
+    </div>
+    <div class="hero-content">
+        <h1 class="hero-title">
+            Discover <span class="gradient-text">Topics</span> &amp;
+            <span class="gradient-text">Sentiment</span>
+        </h1>
+        <p class="hero-subtitle">
+            Paste your text or upload a file — our NLP engine extracts hidden topics
+            and analyses the sentiment of each one, all in seconds.
+        </p>
+    </div>
+</section>
+
+<!-- Analysis Form -->
+<section class="form-section" id="analyze-form-section">
+    <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data" class="analysis-form glass-card" id="analysis-form">
+
+        <!-- Text Input -->
+        <div class="form-group">
+            <label for="text-input" class="form-label">
+                <span class="label-icon">📝</span> Paste your text
+            </label>
+            <textarea
+                id="text-input"
+                name="text"
+                class="form-textarea"
+                rows="10"
+                placeholder="Paste reviews, articles, survey responses, or any text you want to analyse…"
+            ></textarea>
+            <div class="char-count" id="char-count">0 characters</div>
+        </div>
+
+        <!-- Divider -->
+        <div class="form-divider">
+            <span class="divider-text">or</span>
+        </div>
+
+        <!-- File Upload -->
+        <div class="form-group">
+            <label for="file-input" class="form-label">
+                <span class="label-icon">📄</span> Upload a file
+                <span class="form-hint">(CSV or TXT, max 16 MB)</span>
+            </label>
+            <div class="file-upload-area" id="file-upload-area">
+                <input type="file" id="file-input" name="file" accept=".csv,.txt" class="file-input-hidden">
+                <div class="file-upload-content">
+                    <div class="upload-icon">⬆</div>
+                    <p class="upload-text">Drag &amp; drop your file here, or <span class="upload-browse">browse</span></p>
+                    <p class="upload-hint">Supports .csv and .txt files</p>
+                </div>
+                <div class="file-selected" id="file-selected" style="display:none;">
+                    <span class="file-icon">📎</span>
+                    <span id="file-name"></span>
+                    <button type="button" class="file-remove" id="file-remove">&times;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Options -->
+        <div class="form-options">
+            <div class="form-group form-group--inline">
+                <label for="n-topics" class="form-label form-label--sm">
+                    Number of topics
+                </label>
+                <div class="range-wrapper">
+                    <input type="range" id="n-topics" name="n_topics" min="2" max="15" value="5" class="form-range">
+                    <span class="range-value" id="n-topics-value">5</span>
+                </div>
+            </div>
+
+            <div class="form-group form-group--inline">
+                <label for="method-select" class="form-label form-label--sm">
+                    Algorithm
+                </label>
+                <div class="select-wrapper">
+                    <select id="method-select" name="method" class="form-select">
+                        <option value="lda" selected>LDA (Latent Dirichlet Allocation)</option>
+                        <option value="nmf">NMF (Non-negative Matrix Factorization)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn--primary btn--lg" id="analyze-btn">
+            <span class="btn-text">Analyze Text</span>
+            <span class="btn-loader" style="display:none;">
+                <span class="spinner"></span> Processing…
+            </span>
+        </button>
+    </form>
+</section>
+
+<!-- How it Works -->
+<section class="how-section" id="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-grid">
+        <div class="step-card glass-card">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Input Text</h3>
+            <p class="step-desc">Paste text directly or upload a CSV/TXT file containing your documents.</p>
+        </div>
+        <div class="step-card glass-card">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Topic Extraction</h3>
+            <p class="step-desc">LDA or NMF algorithms discover hidden thematic clusters in your data.</p>
+        </div>
+        <div class="step-card glass-card">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Sentiment Analysis</h3>
+            <p class="step-desc">VADER &amp; TextBlob score each document's emotional tone and subjectivity.</p>
+        </div>
+        <div class="step-card glass-card">
+            <div class="step-number">4</div>
+            <h3 class="step-title">Visual Dashboard</h3>
+            <p class="step-desc">Interactive Plotly charts show topic-sentiment relationships at a glance.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
