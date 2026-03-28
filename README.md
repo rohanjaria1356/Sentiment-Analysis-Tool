@@ -5,7 +5,6 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4+-F7931E?logo=scikit-learn&logoColor=white)
 ![NLTK](https://img.shields.io/badge/NLTK-3.8+-154F5B?logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -21,7 +20,6 @@
 - [How It Works](#how-it-works)
 - [Sample Data](#sample-data)
 - [Running Tests](#running-tests)
-- [License](#license)
 
 ---
 
