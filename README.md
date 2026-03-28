@@ -1,4 +1,4 @@
-# 🔍 TopicSenti — Topic-Sentiment Analysis Tool
+#  TopicSenti — Topic-Sentiment Analysis Tool
 
 > **An NLP-powered command-line tool** that extracts hidden topics from text and analyses the sentiment associated with each topic. Built as a BYOP capstone project for CSA2001 (AI & Machine Learning).
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -40,17 +40,15 @@ The **primary interface is a command-line tool (CLI)** that provides rich, colou
 
 ## Features
 
-- ✅ **CLI-first design** — beautiful terminal output with Rich formatting
-- ✅ **Interactive mode** — paste text directly, or provide via file
-- ✅ **File support** — analyse CSV or TXT files from the command line
-- ✅ **Topic extraction** using LDA or NMF algorithms
-- ✅ **Dual sentiment analysis** with VADER and TextBlob (consensus scoring)
-- ✅ **Coloured output** — sentiment-coded tables, bars, and summary panels
-- ✅ **Configurable** number of topics (2–15) and algorithm selection
-- ✅ **Bonus web UI** — Flask dashboard with interactive Plotly.js charts
-- ✅ **No GPU required** — runs on any machine with Python 3.10+
-
----
+-  **CLI-first design** — beautiful terminal output with Rich formatting
+-  **Interactive mode** — paste text directly, or provide via file
+-  **File support** — analyse CSV or TXT files from the command line
+-  **Topic extraction** using LDA or NMF algorithms
+-  **Dual sentiment analysis** with VADER and TextBlob (consensus scoring)
+-  **Coloured output** — sentiment-coded tables, bars, and summary panels
+-  **Configurable** number of topics (2–15) and algorithm selection
+-  **Bonus web UI** — Flask dashboard with interactive Plotly.js charts
+-  **No GPU required** — runs on any machine with Python 3.10+
 
 ## Tech Stack
 
@@ -63,8 +61,6 @@ The **primary interface is a command-line tool (CLI)** that provides rich, colou
 | Sentiment Analysis | VADER (NLTK) + TextBlob   | Lexicon-based sentiment scoring      |
 | Web UI (bonus)     | Flask + Plotly.js          | Interactive browser dashboard        |
 | Testing            | pytest                    | Unit tests                           |
-
----
 
 ## Project Structure
 
@@ -104,7 +100,6 @@ aiml_project/
     └── project_report.pdf
 ```
 
----
 
 ## Setup & Installation
 
@@ -252,6 +247,6 @@ This project is released under the [MIT License](LICENSE).
 
 ## Author
 
-**Rohan** — CSA2001 BYOP Capstone Project
+**Rohan Jaria**
 
 ---
