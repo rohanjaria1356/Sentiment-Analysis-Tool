@@ -188,8 +188,6 @@ The CLI displays:
 - **Document Details** — formatted table with topic assignment & sentiment per document
 - **Sentiment Bar Chart** — ASCII bar chart of topic sentiment scores
 
----
-
 ## Usage (Web UI — Bonus)
 
 A bonus Flask web dashboard is also available:
@@ -203,8 +201,6 @@ Open [http://localhost:5000](http://localhost:5000) in your browser. The web UI 
 - Interactive Plotly.js charts (donut, heatmap, bar charts)
 - Dark-themed dashboard with glassmorphism design
 
----
-
 ## How It Works
 
 ```
@@ -216,8 +212,6 @@ Input Text → Preprocessing → Topic Modelling → Sentiment Analysis → Resu
 3. **Sentiment Analysis** — VADER (rule-based, compound score) + TextBlob (pattern-based, polarity/subjectivity) with consensus logic
 4. **Output** — Results displayed in CLI (Rich tables & panels) or Web UI (Plotly.js charts)
 
----
-
 ## Sample Data
 
 A sample CSV with 50 reviews is included at `sample_data/sample_reviews.csv`. Quick test:
@@ -226,22 +220,12 @@ A sample CSV with 50 reviews is included at `sample_data/sample_reviews.csv`. Qu
 python cli.py -f sample_data/sample_reviews.csv -n 5 -m lda
 ```
 
----
-
 ## Running Tests
 
 ```bash
 # From the project root
 pytest tests/ -v
 ```
-
----
-
-## License
-
-This project is released under the [MIT License](LICENSE).
-
----
 
 ## Author
 
